@@ -14,8 +14,7 @@ public class UC05CadastrarUsuario {
 			// cenario
 			Usuario umUsuario = new Usuario();
 			// acao
-			umUsuario.setRa("121212");
-			umUsuario.setNome("Maria do Rosario");
+			umUsuario = ObtemUsuario.comDadosValidos();
 		} catch (RuntimeException e) {
 			// verificacao
 			fail("nao deve falhar");
@@ -28,8 +27,7 @@ public class UC05CadastrarUsuario {
 			// cenario
 			Usuario umUsuario = new Usuario();
 			// acao
-			umUsuario.setRa("");
-			umUsuario.setNome("Maria do Rosario");
+			umUsuario = ObtemUsuario.comRA_branco();
 		} catch (RuntimeException e) {
 			// verificacao
 			assertEquals("RA Inválido", e.getMessage());
@@ -42,8 +40,7 @@ public class UC05CadastrarUsuario {
 			// cenario
 			Usuario umUsuario = new Usuario();
 			// acao
-			umUsuario.setRa(null);
-			umUsuario.setNome("Maria do Rosario");
+			umUsuario = ObtemUsuario.comRA_nulo();
 		} catch (RuntimeException e) {
 			// verificacao
 			assertEquals("RA Inválido", e.getMessage());
@@ -56,8 +53,7 @@ public class UC05CadastrarUsuario {
 			// cenario
 			Usuario umUsuario = new Usuario();
 			// acao
-			umUsuario.setRa("121212");
-			umUsuario.setNome("");
+			umUsuario = ObtemUsuario.comNome_branco();
 		} catch (RuntimeException e) {
 			// verificacao
 			assertEquals("Nome Inválido", e.getMessage());
@@ -70,8 +66,7 @@ public class UC05CadastrarUsuario {
 			// cenario
 			Usuario umUsuario = new Usuario();
 			// acao
-			umUsuario.setRa("121212");
-			umUsuario.setNome(null);
+			umUsuario = ObtemUsuario.comNome_nulo();
 		} catch (RuntimeException e) {
 			// verificacao
 			assertEquals("Nome Inválido", e.getMessage());

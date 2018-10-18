@@ -9,20 +9,13 @@ public class Livro {
 		
 	}
 	
-	public Livro(String isbn, String titulo, String autor) {
-		this.setIsbn(isbn);
-		this.setTitulo(titulo);
-		this.setAutor(autor);
-	}
-
-	
 	public String getIsbn() {
 		return isbn;
 	}
 
 	public void setIsbn(String isbn) {
 		if (isbn == "" | isbn == null) {
-			throw new RuntimeException("ISBN invalido");
+			throw new RuntimeException("ISBN inválido");
 		}
 		this.isbn = isbn;
 	}
@@ -33,7 +26,7 @@ public class Livro {
 
 	public void setTitulo(String titulo) {
 		if(titulo == "" | titulo == null) {
-			throw new RuntimeException("Título Inválido");
+			throw new RuntimeException("Titulo inválido");
 		}
 		this.titulo = titulo;
 	}
@@ -44,7 +37,7 @@ public class Livro {
 
 	public void setAutor(String autor) {
 		if(autor == "" | autor == null) {
-			throw new RuntimeException("Autor Inválido");
+			throw new RuntimeException("Autor inválido");
 		}
 		this.autor = autor;
 	}
