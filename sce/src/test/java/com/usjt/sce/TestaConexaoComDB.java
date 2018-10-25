@@ -2,6 +2,8 @@ package com.usjt.sce;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import com.mysql.jdbc.Connection;
 import com.usjt.sce.model.ConfiguraDB;
 import com.usjt.sce.model.FabricaDeConexoes;
 
@@ -14,11 +16,15 @@ public class TestaConexaoComDB {
 	@Test
 	public void quandoConectaComOBancoRetornaOK() {
 		// cenario
-		FabricaDeConexoes fabrica;
-		// acao
-		fabrica = new FabricaDeConexoes();
-		// verificacao
-		assertNotNull(fabrica.getConnection());
+		Connection c = null;
+		try {
+			// acao
+			c = new FabricaDeConexoes().getConnection();
+			// verificacao
+			assertNotNull(c);
+		} catch (Exception e) {
+			fail("nao deveria falhar");
+		}
 	}
 
 	/**
@@ -41,7 +47,7 @@ public class TestaConexaoComDB {
 			fail("deveria falhar");
 		} catch (Exception e) {
 			// verificacao
-			//System.out.println(e.getMessage());
+			// System.out.println(e.getMessage());
 			assertEquals(e.getMessage(),
 					"java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)");
 		}
@@ -67,11 +73,11 @@ public class TestaConexaoComDB {
 			fail("deveria falhar");
 		} catch (Exception e) {
 			// verificacao
-			//System.out.println(e.getMessage());
-			assertEquals(e.getMessage(),
-					"java.lang.ClassNotFoundException: com.mysql.jdbc.Driver1");
+			// System.out.println(e.getMessage());
+			assertEquals(e.getMessage(), "java.lang.ClassNotFoundException: com.mysql.jdbc.Driver1");
 		}
 	}
+
 	@Test
 	public void quandoConectaComURLInvalido_SQLException() {
 		// cenario
@@ -90,9 +96,8 @@ public class TestaConexaoComDB {
 			// verificacao
 			System.out.println(e.getMessage());
 			assertEquals(e.getMessage(),
-					"com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure\n" + 
-					"\n" + 
-					"The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.");
+					"com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure\n" + "\n"
+							+ "The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.");
 		}
 	}
 }

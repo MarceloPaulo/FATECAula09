@@ -4,47 +4,52 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.usjt.sce.model.DAOFactory;
+import com.usjt.sce.model.ILivroDAO;
 import com.usjt.sce.model.Livro;
-
 
 public class UC01CadastrarLivro {
 	@Test
 	public void CT01CadastrarLivroComDadosValidos() {
 		try {
 			// cenario
-			 Livro umLivro = new Livro();
-			 // acao
-			 umLivro = ObtemLivro.comDadosValidos();
+			Livro umLivro = new Livro();
+			// acao
+			umLivro = ObtemLivro.comDadosValidos();
 		} catch (RuntimeException e) {
 			// verificacao
 			fail("Não deve falhar");
 		}
 	}
-/**
- * Objetivo: verificar o comportamento do sistema no cadastro de livro com dados válidos.
- */
+
+	/**
+	 * Objetivo: verificar o comportamento do sistema no cadastro de livro com dados
+	 * válidos.
+	 */
 	@Test
 	public void CT02CadastrarLivroComISBN_em_branco() {
 		try {
 			// cenario
-			 Livro umLivro = new Livro();
-			 // acao
-			 umLivro = ObtemLivro.comISBNInvalido_branco();
+			Livro umLivro = new Livro();
+			// acao
+			umLivro = ObtemLivro.comISBNInvalido_branco();
 		} catch (RuntimeException e) {
 			// verificacao
 			assertEquals("ISBN inválido", e.getMessage());
 		}
 	}
-/**
- * Objetivo: verificar o comportamento do sistema no cadastro de livro com ISBN branco.
- */
+
+	/**
+	 * Objetivo: verificar o comportamento do sistema no cadastro de livro com ISBN
+	 * branco.
+	 */
 	@Test
 	public void CT03CadastrarLivroComISBN_nulo() {
 		try {
 			// cenario
-			 Livro umLivro = new Livro();
-			 // acao
-			 umLivro = ObtemLivro.comISBNInvalido_nulo();
+			Livro umLivro = new Livro();
+			// acao
+			umLivro = ObtemLivro.comISBNInvalido_nulo();
 		} catch (RuntimeException e) {
 			// verificacao
 			assertEquals("ISBN inválido", e.getMessage());
@@ -55,7 +60,7 @@ public class UC01CadastrarLivro {
 	public void CT04CadastrarLivroComTitulo_em_branco() {
 		// cenario
 		Livro livro = new Livro();
-		
+
 		try {
 			// acao
 			livro = ObtemLivro.comTituloInvalido_branco();
@@ -134,6 +139,19 @@ public class UC01CadastrarLivro {
 		livro.setTitulo("Engenharia de Software");
 		assertEquals("Pressman", livro.getAutor());
 	}
+
+	@Test
+	public void CT11CadastrarLivro_com_sucesso() {
+		// cenario
+		Livro umLivro = ObtemLivro.comDadosValidos();
+		DAOFactory mySQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+		ILivroDAO livroDAO = mySQLFactory.getLivroDAO();
+		// acao
+		int codigoRetorno = livroDAO.adiciona(umLivro);
+		// verificacao
+		assertEquals(1, codigoRetorno);
+		livroDAO.exclui(umLivro.getIsbn());
+	}
+	
+	
 }
-	
-	
