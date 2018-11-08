@@ -34,7 +34,7 @@ public class FabricaDeConexoes {
 			logger.info("Exceção geral causa SQLException: " + e.getMessage());
 			throw new RuntimeException(e);
 		} catch (Exception e) {
-			logger.info("Exceçãoo geral causa: " + e.getMessage());
+			logger.info("Exceção geral causa: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}

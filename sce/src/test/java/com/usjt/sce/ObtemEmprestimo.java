@@ -2,6 +2,9 @@ package com.usjt.sce;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 
 import com.usjt.sce.model.Emprestimo;
@@ -89,11 +92,48 @@ public class ObtemEmprestimo {
 	
 	@Test
 	public void CT01RegistraEmprestimoDeLivro_com_sucesso() {
+		@SuppressWarnings("unused")
 		Livro livro = ObtemLivro.comDadosValidos();
 		Usuario aluno = ObtemUsuario.comRA_nulo();
 		ServicoEmprestimo servico = new ServicoEmprestimo();
 		Emprestimo resultadoEsperado = servico.empresta(null, aluno);
 		// verificação
 		assertNotNull(resultadoEsperado);
+	}
+	
+	@Test
+	public static Emprestimo comDataDeDevolucaoVencida() {
+		 Livro livro = ObtemLivro.comDadosValidos();
+		 Usuario aluno = ObtemUsuario.comDadosValidos();
+		 ServicoEmprestimo servico = new ServicoEmprestimo();
+		 Emprestimo umEmprestimo = servico.empresta(livro, aluno);
+		 umEmprestimo.setDataEmprestimo("2018/09/10");
+		 umEmprestimo.setDataDevolucao("2018/09/24"); // mais de 8 dias
+		 return umEmprestimo;
+		}
+	
+	@Test
+	public static Emprestimo comDataDeDevolucaoIgualAoEmprestimo() {
+		Livro livro = ObtemLivro.comDadosValidos();
+		Usuario aluno = ObtemUsuario.comDadosValidos();
+		ServicoEmprestimo servico = new ServicoEmprestimo();
+		Emprestimo emprestimo = servico.empresta(livro, aluno);
+		//
+		DateTime dataAtual = new DateTime();
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
+		emprestimo.setDataEmprestimo(dataAtual.toString(fmt));
+		emprestimo.setDataDevolucao(dataAtual.toString(fmt));
+		return emprestimo;
+	}
+	
+	@Test
+	public static Emprestimo comDataDeDevolucaoIgualAoEmprestimoMaisUm() {
+		Livro livro = ObtemLivro.comDadosValidos();
+		Usuario aluno = ObtemUsuario.comDadosValidos();
+		ServicoEmprestimo servico = new ServicoEmprestimo();
+		Emprestimo emprestimo = servico.empresta(livro, aluno);
+		emprestimo.setDataEmprestimo("2018/09/10");
+		emprestimo.setDataEmprestimo("2018/09/11");
+		return emprestimo;
 	}
 }
