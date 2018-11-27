@@ -53,7 +53,7 @@ public class UC09RegistraEmprestimoDeLivro {
 	public void CT02RegistraEmprestimoDeLivroComDataBuilder() {
 		// cenário
 		Emprestimo emprestimo = null;
-		// acao
+		// ação
 		emprestimo = ObtemEmprestimo.comDadosValidos();
 		// verificação
 		assertNotNull(emprestimo);
@@ -67,7 +67,7 @@ public class UC09RegistraEmprestimoDeLivro {
 		// cenário
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("YYYY/MM/dd");
 		String dataEsperada = new DateTime().plusDays(8).toString(fmt);
-		// acao
+		// ação
 		Emprestimo emprestimo = ObtemEmprestimo.comDadosValidos();
 		String dataObtida = emprestimo.getDataDevolucao();
 		// verificacao
@@ -100,6 +100,7 @@ public class UC09RegistraEmprestimoDeLivro {
 			// ação
 			emprestimo = ObtemEmprestimo.comServicoUsuarioInvalidoNulo();
 		} catch (Exception e) {
+			//verificação
 			assertNull(emprestimo);
 		}
 	}
@@ -109,12 +110,13 @@ public class UC09RegistraEmprestimoDeLivro {
 	 */
 	@Test
 	public void CT06RegistraEmprestimoDeLivroComLivroInvalidoNulo() {
-		// cenario
+		// cenário
 		Emprestimo emprestimo = null;
 		try {
-			// acao
+			// ação
 			emprestimo = ObtemEmprestimo.comLivroInvalidoNulo();
 		} catch (RuntimeException e) {
+			//verificação
 			assertNull(emprestimo);
 		}
 	}
@@ -130,6 +132,7 @@ public class UC09RegistraEmprestimoDeLivro {
 			// ação
 			emprestimo = ObtemEmprestimo.comUsuarioInvalidoNulo();
 		} catch (Exception e) {
+			//verificação
 			assertNull(emprestimo);
 		}
 	}
@@ -142,7 +145,7 @@ public class UC09RegistraEmprestimoDeLivro {
 		// cenário
 		@SuppressWarnings("unused")
 		Emprestimo emprestimo = null;
-		// ação
+		// ação e verificação
 		emprestimo = ObtemEmprestimo.comDataDiferente();
 	}
 
@@ -159,6 +162,7 @@ public class UC09RegistraEmprestimoDeLivro {
 		int codigoRetorno = 0;
 		// ação
 		codigoRetorno = iEmprestimoDAO.adiciona(emprestimo);
+		//verificação
 		assertEquals(1, codigoRetorno);
 	}
 
